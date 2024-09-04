@@ -129,6 +129,16 @@ void suprime_livre(){
     getchar();
 }
 
+void calcul_total(){
+    int s = 0;
+    for (int i = 0; i < dim; i++)
+    {
+        s += L[i].id;
+    }
+    printf("Le nombre total de livres en stock est : %d\n", s);
+    
+}
+
 int menu()
 {
     int opt;
@@ -162,8 +172,12 @@ int menu()
         case 5:
         suprime_livre(L);
            break;
+        case 6:
+            calcul_total(L);
+            break;
         case 7:
             return 0; 
+        
         default:
             printf("Option invalide. Veuillez reessayer.\n");
             break;
