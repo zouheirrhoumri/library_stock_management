@@ -78,6 +78,28 @@ void recherche_livre(livre L[])
     printf("Livre non trouve.\n");
 }
 
+void modifier_qty(){
+    char titre[25];
+    int num = 0;
+    printf("entrez le titre");
+    scanf("%[^\n]", titre);
+    for (int i = 0; i < dim; i++)
+    {
+        if (strcmp(L[i].titre, titre) == 0)
+        {num++;
+        printf("entrez la nouvelle quantite");
+        scanf("%d" , L[i].qty);
+        }
+        
+    }
+    if (num == 0)
+    {
+      printf("\t\t il ya pas un livre avec se titre"); 
+    }
+
+
+}
+
 int menu()
 {
     int opt;
