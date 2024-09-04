@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 typedef struct livre
 {
     int id;
@@ -8,26 +9,30 @@ typedef struct livre
     float prix;
     int qty;
 } livre;
+
 livre L[100];
 int dim = 0;
 int ID = 0;
+
 void ajouter_livre(livre L[])
 {
     L[dim].id = ID + 1;
 
-    printf("\t\t titre: \n");
-    getchar();
+    printf("\t\tTitre: \n");
+    getchar(); 
     scanf("%[^\n]", L[dim].titre);
-    getchar();
-    printf("\t\t auteur: \n");
+    getchar(); 
+
+    printf("\t\tAuteur: \n");
     scanf("%[^\n]", L[dim].auteur);
-    getchar();
+    getchar(); 
 
-    printf("\t\tprix: \n");
-    scanf("%f", L[dim].prix);
+    printf("\t\tPrix: \n");
+    scanf("%f", &L[dim].prix);
 
-    printf("\t\tentrez la quntite\n");
-    scanf("%d", L[dim].qty);
+    printf("\t\tEntrez la quantite: \n");
+    scanf("%d", &L[dim].qty);
+
     dim++;
     ID++;
 }
@@ -35,29 +40,42 @@ void ajouter_livre(livre L[])
 void afficher_livre(livre L[])
 {
     printf("\t\t+-------------------------------------------------------------------+\n");
-    printf("\t\t| Id |        TITRE         |      AUTEUR     | PRIX |    QUNTITE   |\n");
+    printf("\t\t| Id |        TITRE         |      AUTEUR     |  PRIX  | QUANTITe   |\n");
     printf("\t\t+-------------------------------------------------------------------+\n");
     for (int i = 0; i < dim; i++)
     {
-        printf("\t\t |%-2d  |%-17s | %-17s  | %-3d  | %-3d", L[i].id, L[i].titre, L[i].auteur, L[i].prix, L[i].qty);
+        printf("\t\t |%-2d |%-17s | %-17s | %-6.2f | %-9d|\n", L[i].id, L[i].titre, L[i].auteur, L[i].prix, L[i].qty);
     }
     printf("\t\t+-------------------------------------------------------------------+\n");
 }
 
-void recherche_livre(livre L[]){
-    char title[20];
-    printf("entrez le titre de livre que vous ");
-    scanf("%^[\n]",title);
-    strupr(title);
+void recherche_livre(livre L[])
+{
+    char title[25];
+    printf("Entrez le titre du livre que vous recherchez : ");
+    getchar(); 
+    scanf("%[^\n]", title);
+
+    for (int i = 0; title[i]; i++)
+    {
+        title[i] = toupper(title[i]);
+    }
+
     for (int i = 0; i < dim; i++)
     {
-       if(strcmp(L[i].titre , title)){
-        printf("\t\t |%-2d  |%-17s | %-17s  | %-3d  | %-3d", L[i].id, L[i].titre, L[i].auteur, L[i].prix, L[i].qty);
-             break;
-       }
+        char tempTitre[25];
+        strcpy(tempTitre, L[i].titre);
+        for (int j = 0; tempTitre[j]; j++)
+        {
+            tempTitre[j] = toupper(tempTitre[j]);
+        }
+        if (strcmp(tempTitre, title) == 0)
+        {
+            printf("\t\t |%-2d |%-17s | %-17s | %-6.2f | %-9d|\n", L[i].id, L[i].titre, L[i].auteur, L[i].prix, L[i].qty);
+            return;
+        }
     }
-    
-
+    printf("Livre non trouve.\n");
 }
 
 int menu()
@@ -65,16 +83,17 @@ int menu()
     int opt;
     while (1)
     {
-        printf("\t================= STOCK MANGEMENT =================");
+        printf("\t================= STOCK MANAGEMENT =================\n");
         printf("\n     1. Ajouter un livre au stock.");
         printf("\n     2. Afficher tous les livres disponibles.");
         printf("\n     3. Rechercher un livre par son titre.");
-        printf("\n     4. Mettre à jour la quantité d'un livre.");
+        printf("\n     4. Mettre à jour la quantite d'un livre.");
         printf("\n     5. Supprimer un livre du stock.");
         printf("\n     6. Afficher le nombre total de livres en stock.");
         printf("\n     7. EXIT ");
-        printf("\n\nveullez selectez une option :");
+        printf("\n\nVeuillez selectionner une option : ");
         scanf("%d", &opt);
+
         switch (opt)
         {
         case 1:
@@ -83,19 +102,22 @@ int menu()
         case 2:
             afficher_livre(L);
             break;
-        case 3: 
-           recherche_livre(L);
-           break;
+        case 3:
+            recherche_livre(L);
+            break;
+        case 7:
+            return 0; 
         default:
-            printf("error");
-            return 0;
+            printf("Option invalide. Veuillez reessayer.\n");
             break;
         }
-        return 0;
-    }
 
-    printf("\n\n");
+        printf("Press Enter to continue...");
+        getchar(); 
+        getchar(); 
+    }
 }
+
 int main()
 {
     menu();
