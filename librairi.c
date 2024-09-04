@@ -124,6 +124,9 @@ void suprime_livre(){
     if (num == 0) {
         printf("\t\tIl n'y a pas de livre avec ce titre.\n");
     }
+    printf("Press Enter to continue...");
+    getchar(); 
+    getchar();
 }
 
 int menu()
@@ -156,6 +159,9 @@ int menu()
         case 4:
             modifier_qty(L);
             break;
+        case 5:
+        suprime_livre(L);
+           break;
         case 7:
             return 0; 
         default:
