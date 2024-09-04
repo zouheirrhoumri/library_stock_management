@@ -78,26 +78,30 @@ void recherche_livre(livre L[])
     printf("Livre non trouve.\n");
 }
 
-void modifier_qty(){
+void modifier_qty() {
     char titre[25];
     int num = 0;
-    printf("entrez le titre");
-    scanf("%[^\n]", titre);
-    for (int i = 0; i < dim; i++)
-    {
-        if (strcmp(L[i].titre, titre) == 0)
-        {num++;
-        printf("entrez la nouvelle quantite");
-        scanf("%d" , L[i].qty);
+
+    printf("Entrez le titre du livre: ");
+    getchar();  
+    scanf("%[^\n]", titre);  
+
+    for (int i = 0; i < dim; i++) {
+        if (strcmp(L[i].titre, titre) == 0) {
+            num++;
+            printf("Entrez la nouvelle quantite: ");
+            scanf("%d", &L[i].qty);  
+            printf("Quantite modifiee pour le livre '%s'.\n", L[i].titre);  
+            break;  
         }
-        
-    }
-    if (num == 0)
-    {
-      printf("\t\t il ya pas un livre avec se titre"); 
     }
 
-
+    if (num == 0) {
+        printf("\t\tIl n'y a pas de livre avec ce titre.\n");
+    }
+    printf("Press Enter to continue...");
+    getchar(); 
+    getchar(); 
 }
 
 int menu()
@@ -105,7 +109,7 @@ int menu()
     int opt;
     while (1)
     {
-        printf("\t================= STOCK MANAGEMENT =================\n");
+        printf("\n================= STOCK MANAGEMENT =================\n");
         printf("\n     1. Ajouter un livre au stock.");
         printf("\n     2. Afficher tous les livres disponibles.");
         printf("\n     3. Rechercher un livre par son titre.");
@@ -127,6 +131,9 @@ int menu()
         case 3:
             recherche_livre(L);
             break;
+        case 4:
+            modifier_qty(L);
+            break;
         case 7:
             return 0; 
         default:
@@ -135,8 +142,8 @@ int menu()
         }
 
         printf("Press Enter to continue...");
-        getchar(); 
-        getchar(); 
+        while (getchar() != '\n');  
+        getchar();
     }
 }
 
