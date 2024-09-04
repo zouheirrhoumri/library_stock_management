@@ -133,7 +133,7 @@ void calcul_total(){
     int s = 0;
     for (int i = 0; i < dim; i++)
     {
-        s += L[i].id;
+        s += L[i].qty;
     }
     printf("Le nombre total de livres en stock est : %d\n", s);
     
