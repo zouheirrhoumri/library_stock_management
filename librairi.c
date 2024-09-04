@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 typedef struct livre
 {
     int id;
@@ -16,17 +17,17 @@ void ajouter_livre(livre L[])
 
     printf("\t\t titre: \n");
     getchar();
-    scanf("%[^\n]", &L[dim].titre);
+    scanf("%[^\n]", L[dim].titre);
     getchar();
     printf("\t\t auteur: \n");
-    scanf("%[^\n]", &L[dim].auteur);
+    scanf("%[^\n]", L[dim].auteur);
     getchar();
 
     printf("\t\tprix: \n");
-    scanf("%f", &L[dim].prix);
+    scanf("%f", L[dim].prix);
 
     printf("\t\tentrez la quntite\n");
-    scanf("%d", &L[dim].qty);
+    scanf("%d", L[dim].qty);
     dim++;
     ID++;
 }
@@ -41,6 +42,22 @@ void afficher_livre(livre L[])
         printf("\t\t |%-2d  |%-17s | %-17s  | %-3d  | %-3d", L[i].id, L[i].titre, L[i].auteur, L[i].prix, L[i].qty);
     }
     printf("\t\t+-------------------------------------------------------------------+\n");
+}
+
+void recherche_livre(livre L[]){
+    char title[20];
+    printf("entrez le titre de livre que vous ");
+    scanf("%^[\n]",title);
+    strupr(title);
+    for (int i = 0; i < dim; i++)
+    {
+       if(strcmp(L[i].titre , title)){
+        printf("\t\t |%-2d  |%-17s | %-17s  | %-3d  | %-3d", L[i].id, L[i].titre, L[i].auteur, L[i].prix, L[i].qty);
+             break;
+       }
+    }
+    
+
 }
 
 int menu()
@@ -66,10 +83,15 @@ int menu()
         case 2:
             afficher_livre(L);
             break;
+        case 3: 
+           recherche_livre(L);
+           break;
         default:
             printf("error");
+            return 0;
             break;
         }
+        return 0;
     }
 
     printf("\n\n");
