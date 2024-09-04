@@ -103,6 +103,28 @@ void modifier_qty() {
     getchar(); 
     getchar(); 
 }
+void suprime_livre(){
+   char titre[25];
+    int num = 0;
+
+    printf("Entrez le titre du livre: ");
+    getchar();  
+    scanf("%[^\n]", titre);  
+
+    for (int i = 0; i < dim; i++) {
+        if (strcmp(L[i].titre, titre) == 0) {
+            num++;
+             for (int j = i; j < dim - 1; j++)
+            {
+                L[j] = L[j + 1];
+            }
+            dim--;
+        }
+    }
+    if (num == 0) {
+        printf("\t\tIl n'y a pas de livre avec ce titre.\n");
+    }
+}
 
 int menu()
 {
